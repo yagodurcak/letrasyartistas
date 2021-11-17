@@ -27,17 +27,30 @@ const Boton = styled.button`
    
    `
 
-function Formulario() {
+function Formulario({setConfirmArtist}) {
     
-    const [artista, setArtista] = useState("");
-    const [cancion, setCancion] = useState("");
+    const [artista, setArtista] = useState({
+        artist : '',
+        cancion: ''
+    });
+    
     const [error, setError] = useState(false);
-    
+
+    const SaveValores = (e) => {
+        setArtista(
+            {...artista,
+                [e.target.name] : e.target.value
+            }
+        )
+    }
+
+    const {artist, cancion} = artista;
+    console.log(artist, cancion);
     
     const GuardarValores = (e) => {
      e.preventDefault();
 
-     if (artista.trim() === "" || cancion.trim() === "") {
+     if (artist.trim() === "" || cancion.trim() === "") {
     
          setError(true)
          return   
@@ -45,7 +58,9 @@ function Formulario() {
      } else {
          
         setError(false);
-         console.log("mañana");
+        setConfirmArtist({artista})
+        
+        
      }
     }
 
@@ -56,12 +71,12 @@ function Formulario() {
             <form action="" className="grid justify-items-end" onSubmit={GuardarValores}>
                 <div className="grid grid-cols-2 gap-4">
                     <InputContainer>
-                        <label htmlFor="" className="text-4xl text-white py-3 font-semibold">Artista</label>
-                        <Input type="text" onChange={(e)=> setArtista(e.target.value)}/>
+                        <label htmlFor="" className="text-4xl text-white py-3 font-semibold" name="artist" value={artist}>Artista</label>
+                        <Input type="text" onChange={SaveValores}/>
                     </InputContainer>
                     <InputContainer>
-                        <label htmlFor="" className="text-4xl text-white py-3 font-semibold">Canción</label>
-                        <Input type="text" onChange={(e)=> setCancion(e.target.value)}/>
+                        <label htmlFor="" className="text-4xl text-white py-3 font-semibold" name='cancion' value={cancion}>Canción</label>
+                        <Input type="text" onChange={SaveValores}/>
                     </InputContainer>
                 </div>
                  <Boton type="submit">Buscar</Boton>
