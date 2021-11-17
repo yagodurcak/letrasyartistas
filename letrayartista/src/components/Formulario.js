@@ -35,17 +35,13 @@ function Formulario({setConfirmArtist}) {
     });
     
     const [error, setError] = useState(false);
+    const {artist, cancion} = artista;
 
-    const SaveValores = (e) => {
-        setArtista(
-            {...artista,
-                [e.target.name] : e.target.value
-            }
-        )
+    const SaveValores = e => {
+        setArtista({...artista,
+                [e.target.name] : e.target.value})
     }
 
-    const {artist, cancion} = artista;
-    console.log(artist, cancion);
     
     const GuardarValores = (e) => {
      e.preventDefault();
@@ -58,8 +54,10 @@ function Formulario({setConfirmArtist}) {
      } else {
          
         setError(false);
-        setConfirmArtist({artista})
         
+        setConfirmArtist(artista);
+
+ 
         
      }
     }
@@ -71,12 +69,12 @@ function Formulario({setConfirmArtist}) {
             <form action="" className="grid justify-items-end" onSubmit={GuardarValores}>
                 <div className="grid grid-cols-2 gap-4">
                     <InputContainer>
-                        <label htmlFor="" className="text-4xl text-white py-3 font-semibold" name="artist" value={artist}>Artista</label>
-                        <Input type="text" onChange={SaveValores}/>
+                        <label htmlFor="" className="text-4xl text-white py-3 font-semibold" >Artista</label>
+                        <Input type="text" onChange={SaveValores} name="artist" value={artist}/>
                     </InputContainer>
                     <InputContainer>
-                        <label htmlFor="" className="text-4xl text-white py-3 font-semibold" name='cancion' value={cancion}>Canción</label>
-                        <Input type="text" onChange={SaveValores}/>
+                        <label className="text-4xl text-white py-3 font-semibold" >Canción</label>
+                        <Input type="text" onChange={SaveValores} name='cancion' value={cancion} />
                     </InputContainer>
                 </div>
                  <Boton type="submit">Buscar</Boton>
